@@ -28,17 +28,17 @@ export class HomeComponent implements OnInit {
     this.users = this.lsManager.getAccountList()
   }
 
-  setCurrentUser(index : number) {
+  setCurrentUser(index : number): void {
     this.enableEdit = true
     this.selectedUser = this.users[index]
     this.popupIndex = index
   }
 
-  updateUsers(account:User){
+  updateUsers(account:User): void{
     this.selectedUser = account
     this.lsManager.saveToLS(this.users)
   }
-  deleteAccount(index : number){
+  deleteAccount(index : number): void{
     console.log(index)
     this.users.splice(index, 1)
     this.lsManager.saveToLS(this.users)

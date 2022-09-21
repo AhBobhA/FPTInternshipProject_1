@@ -24,11 +24,11 @@ export class EditWindowComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  toggleEdit(){
+  toggleEdit(): void{
     this.edit = !this.edit
   }
 
-  saveEdit(){
+  saveEdit(): void {
     this.account.name = (document.getElementById("name") as HTMLInputElement).value
     this.account.username = (document.getElementById("username") as HTMLInputElement).value
     this.account.email = (document.getElementById("email") as HTMLInputElement).value
@@ -87,7 +87,7 @@ export class EditWindowComponent implements OnInit {
     }
   }
 
-  cancelEdit(){
+  cancelEdit(): void{
     (document.getElementById("name") as HTMLInputElement).value = this.account.name;
     (document.getElementById("username") as HTMLInputElement).value = this.account.username; 
     (document.getElementById("email") as HTMLInputElement).value =  this.account.email;
@@ -102,7 +102,7 @@ export class EditWindowComponent implements OnInit {
     this.toggleEdit()
   }
 
-  closeEdit(){
+  closeEdit(): void{
     this.closePopupEvent.emit(true)
   }
 

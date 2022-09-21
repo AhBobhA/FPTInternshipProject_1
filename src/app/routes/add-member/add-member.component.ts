@@ -35,7 +35,7 @@ export class AddMemberComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit() {
+  onSubmit(): void {
     let errorTrg : boolean = false
     let data : User[] = this.lsManager.getAccountList()
 
@@ -114,7 +114,7 @@ export class AddMemberComponent implements OnInit {
     }
   }
 
-  resetForm(){
+  resetForm(): void{
     this.name = ''
     this.username = ''
     this.email = ''
