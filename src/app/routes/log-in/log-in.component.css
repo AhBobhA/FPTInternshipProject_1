@@ -1,0 +1,32 @@
+.login-form {
+    max-width: 300px;
+    margin: auto;
+}
+
+.login-form-margin {
+    margin-bottom: 16px;
+}
+
+.login-form-forgot {
+    float: right;
+}
+
+.login-form-button {
+    width: 100%;
+}
+
+input[type=checkbox] {
+    vertical-align: middle;
+    position: relative;
+    bottom: 1px;
+}
+
+.ant-form-item {
+    height: 35px;
+}
+
+.login-failed-msg {
+    text-align: center;
+    height: 5px;
+    margin-bottom: 15px;
+}

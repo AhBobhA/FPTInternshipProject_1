@@ -1,0 +1,49 @@
+<form (ngSubmit)="onSubmit()" class="flex-container" nz-form>
+    <div class="margin-auto">
+        <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzRequired for="name"> Name </nz-form-label>
+            <nz-form-control [nzSpan]="18">
+                <input nz-input type="text" id="name" placeholder="Enter user's name" [(ngModel)]="name" name="name"/>
+                <app-error-msg *ngIf="nameError" [msg]="nameEMsg"></app-error-msg>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzRequired for="username"> Username </nz-form-label>
+            <nz-form-control [nzSpan]="18">
+                <input nz-input type="text" id="username" placeholder="Enter user's username" [(ngModel)]="username" name="username"/>
+                <app-error-msg *ngIf="usernameError" [msg]="usernameEMsg"></app-error-msg>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzRequired for="email"> Email</nz-form-label>
+            <nz-form-control>
+                <input nz-input type="email" id="email" placeholder="Enter user's email" [(ngModel)]="email" name="email" email="true"/>
+                <app-error-msg *ngIf="emailError" [msg]="emailEMsg"></app-error-msg>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzRequired for="address"> Address</nz-form-label>
+            <nz-form-control [nzSpan]="18">
+                <input nz-input type="text" id="address" placeholder="Enter user's address" [(ngModel)]="address" name="address"/>
+                <app-error-msg *ngIf="addressError" [msg]="addressEMsg"></app-error-msg>
+            </nz-form-control>
+        </nz-form-item>
+
+        <div class="form-control flex-container">
+            <div class="margin-auto">
+                <input type="radio" id="genderM" value="Male" [(ngModel)]="gender" name="gender" />
+                <label class="radio-label" for="genderM"> Male</label>
+                
+                <input type="radio" id="genderF" value="Female" [(ngModel)]="gender" name="gender"/>
+                <label for="genderF"> Female</label>
+            </div>
+        </div>
+
+        <div class="form-control flex-container">
+            <input type="submit" value="Add new user" class="submit-btn margin-auto"/>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,60 @@
+<h2 *ngIf="!getLoginStatus">Loading . . .</h2>
+<div *ngIf="getLoginStatus">
+    <h1 *ngIf="!loginStatus">Not Log in</h1>
+    <div *ngIf="loginStatus">
+        <div class="banner-container">
+            <img class="profile-banner" src="https://i.pinimg.com/originals/0b/a3/d6/0ba3d60362c7e6d256cfc1f37156bad9.jpg" alt="banner">
+            <div nz-row class="profile-content">
+                <div nz-col nzSpan="6" class="left-space"></div>
+                <div nz-col nzSpan="6" class="left-section">
+                    <div class="profile-intro">
+                        <div class="profile-pic-container">
+                            <img class="profile-pic" src="https://media.istockphoto.com/photos/unknown-male-person-silhouette-picture-id485190262?k=20&m=485190262&s=612x612&w=0&h=Qj-nXRUcFNhDZCk638E0oZs0DBTY4BX3PxNCIxgwm2M=" alt="profile picture">
+                        </div>
+                        <div class="text-intro">
+                        <span>{{data.name}}</span> <br />
+                        <span *ngFor="let job of data.jobs">{{job}}<br /></span> 
+                        </div>
+                    </div>
+                    <div class="profile-article">
+                        <article *ngFor="let article of data.articles">
+                            <h2 class="article-title">{{article.title}}</h2>
+                            <p class="article-content"> {{article.content}}</p>
+                            <div class="article-control">
+                                <div class="left-control">
+                                    <button type="button" class="article-btn">Button 1</button>
+                                    <button type="button" class="article-btn">Button 2</button>
+                                    <button type="button" class="article-btn">Button 3</button>
+                                </div>
+                                <div class="right-control">
+                                    <div class="view-more">
+                                        <a href="https://www.google.com">More >></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div nz-col nzSpan="6" class="right-section">
+                    <div class="gallery-section">
+                        <h2>Photos</h2>
+                        <div nz-row class="gallery-container">
+                            <a *ngFor="let photo of data.photos; let i = index" nz-col nzSpan="12" href="https://www.google.com">
+                                <img [class]="'minified '+ roundCornerClass[i]" [src]="photo">
+                            </a>
+                        </div>
+                        <div class="view-more">
+                            <a href="https://www.google.com">More >></a>
+                        </div>
+                    </div>
+                    <div class="gallery-section">
+                        <h2>Videos</h2>
+                        <iframe *ngFor="let video of data.videos" class="video-iframe" [src]="formatUrl(video) | safeGuard:'resourceUrl'"></iframe>
+                    </div>
+                </div>
+                <div nz-col nzSpan="6" class="right-space"></div>
+            </div>
+        </div>    
+    </div>
+</div>
+

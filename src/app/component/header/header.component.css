@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+a {
+    margin-inline: 10px;
+}
+
+.logout-btn {
+    background-color: transparent;
+    border: 0;
+    margin-inline: 10px;
+    padding: 0;
+    color: red;
+}
+
+button:hover{
+    cursor: pointer;
+}

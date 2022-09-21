@@ -1,0 +1,42 @@
+<div class="outerContainer">
+  <div class="innerContainer">
+    <nz-table #basicTable [nzData]="users" [nzOuterBordered]="true" class="data-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Gender</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of users; let i=index">
+          <td>{{data.name}}</td>
+          <td>{{data.username}}</td>
+          <td>{{data.email}}</td>
+          <td>{{data.address}}</td>
+          <td>{{data.gender}}</td>
+          <td>
+            <button type="button" class="edit-btn" aria-label="edit account" (click)="setCurrentUser(i)">
+              <span nz-icon nzType="edit" nzTheme="outline" style="font-size: 20px;"></span>
+            </button>
+            <nz-divider nzType="vertical"></nz-divider>
+            <button type="button" class="delete-btn" aria-label="delete account" (click)="deleteAccount(i)">
+              <span nz-icon nzType="delete" nzTheme="outline" style="font-size: 20px;"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  <app-edit-window 
+    *ngIf="enableEdit" 
+    [account]="selectedUser"
+    (closePopupEvent)="enableEdit = false"
+    (accountChange) = "updateUsers($event)"
+    [data]="users"
+    [index] ="popupIndex"
+  ></app-edit-window>
+</div>

@@ -1,0 +1,40 @@
+.flex-container {
+    display: flex;
+    width: 100%;
+}
+
+.margin-auto {
+    margin: auto;
+}
+
+.ant-form-item {
+    height: 35px;
+    width: 250px;
+}
+
+.error-msg{
+    margin-top: 0;
+    color: red;
+    font-size: 12px;    
+}
+
+.radio-label {
+    margin-right: 15px;
+}
+
+.submit-btn {
+    margin-top: 15px;
+    height: 30px;
+    color: rgb(237, 237, 237);
+    background: rgb(60, 163, 60);
+    border-radius: 10px;
+    border: 0px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.submit-btn:hover {
+    color: white;
+    
+    background: rgb(68, 186, 68);
+}

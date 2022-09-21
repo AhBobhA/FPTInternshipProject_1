@@ -1,0 +1,7 @@
+<div class="container">
+    <a routerLink="/">Home</a> |
+    <a routerLink="/add">Add User</a> | 
+    <a routerLink="/profile">Profile</a> | 
+    <a *ngIf="!login" routerLink="/login">Log in</a>
+    <button type="button" class="logout-btn" *ngIf="login" (click)="logout()">Log out</button>
+</div>
