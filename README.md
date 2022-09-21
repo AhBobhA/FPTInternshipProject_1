@@ -1,2 +1,2 @@
 # MembersManager + Login System + Profile Page
-<WIP>
+# This project is experimental and lots of improvement can be made. 
