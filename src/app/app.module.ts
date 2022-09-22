@@ -21,7 +21,11 @@ import { LogInComponent } from './routes/log-in/log-in.component';
 
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 
+import { StoreModule } from '@ngrx/store';
+import { authStoreReducer } from './stores/authStore/authStore.reducer';
+
 import { AuthService } from './services/auth.service';
+import { GetUserService } from './services/get-user.service';
 import { LSManagerService } from './services/ls-manager.service';
 import { ChildToParentService } from './services/child-to-parent.service';
 import { ErrorMsgComponent } from './component/error-msg/error-msg.component';
@@ -53,16 +57,19 @@ import { SafeGuardPipe } from './pipe/safe-guard.pipe';
     NzGridModule,
     FormsModule,
     HttpClientModule,
+    StoreModule.forRoot( {loginStatus: authStoreReducer})
   ],
   providers: [
     LSManagerService,   
     ChildToParentService,  
     AuthService,
+    GetUserService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }],
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,17 +1,19 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { JwtToken } from 'src/app/model/jwt-token';
-import { ChildToParentService } from 'src/app/services/child-to-parent.service';
+import { Store } from '@ngrx/store'
+import { AuthSuccess, AuthFail } from 'src/app/stores/authStore/authStore.actions';
 
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.css']
 })
-export class LogInComponent implements OnInit {
+
+export class LogInComponent{
   emailError : boolean = false
   passwordError : boolean = false
   loginFailed : boolean = false
@@ -20,22 +22,11 @@ export class LogInComponent implements OnInit {
   passwordEMsg : string = ''
   loginFailedEMsg : string = ''
 
-  @Output() loginSuccess = new EventEmitter()
-
   constructor(
-    private ctpService : ChildToParentService,
-    private client: HttpClient, 
     private authService: AuthService,
-    private router: Router
-  ) { }
-
-  ngOnInit(): void {
-    this.client.get<any>('http://localhost:8000/users/protected').subscribe({
-      next: () => this.router.navigateByUrl('/'),
-      error: () => {},
-      complete: () => {}
-    });
-  }
+    private router: Router,
+    private store: Store<{ loginStatus: boolean}>
+  ) {}
 
   onSubmit(form : NgForm) : void {
     let email = form.value.email
@@ -52,18 +43,19 @@ export class LogInComponent implements OnInit {
       password: password
     };
 
-    this.client.post('http://localhost:8000/users/login', reqObject, { headers: headers }).subscribe({
-      next: (responseObj) => {
+    this.authService.login(reqObject, headers).subscribe({
+      next: (responseObj : any) => {
         this.authService.setLocalStorage(responseObj as JwtToken)
-        this.ctpService.updateLogin$.next('login success')
+        this.store.dispatch(AuthSuccess())
       },
-      error: (error) => {
+      error: (error : any) => {
         console.log(error)
         this.loginFailed = true
         this.loginFailedEMsg = 'Login Failed'
+        this.store.dispatch(AuthFail())
       },
       complete: () => {
-        this.router.navigateByUrl('/')
+        this.router.navigateByUrl('/profile')
       }
     });
   }

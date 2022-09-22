@@ -1,18 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ChildToParentService } from 'src/app/services/child-to-parent.service';
-import { Subscription } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { GetUserService } from 'src/app/services/get-user.service';
 import { ProfileData } from 'src/app/model/profile-data';
-import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router'; 
+import { Store } from '@ngrx/store'
+import { AuthFail } from 'src/app/stores/authStore/authStore.actions';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit, OnDestroy {
-  loginReq = new Subscription()
+export class ProfileComponent implements OnInit {
   getLoginStatus : boolean = false
-  loginStatus : boolean = false
+
   data : ProfileData = {
     name: '',
     jobs: [],
@@ -22,34 +23,28 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
   roundCornerClass : string[] = ['rc-tl', 'rc-tr', 'rc-bl', 'rc-br']
   constructor(
-    private ctpService : ChildToParentService,
-    private client : HttpClient
+    private authService : AuthService,
+    private userService : GetUserService,
+    private router : Router,
+    private authStore : Store<{loginStatus: boolean}>
   ) { }
 
   ngOnInit(): void {
-    this.loginReq = this.ctpService.loginStatus$.subscribe(($event) => {
-      this.loginStatus = $event
-      this.getLoginStatus = true
-      if ($event === true) {
-        this.client.get<any>('http://localhost:8000/users/profile').subscribe({
-          next: (response) => { 
-            this.data = response.data
-            console.log(this.data)
-          },
-          error: () => {},
-          complete: () => {}
-        });
-      }
+    this.getData()
+  }
+
+  getData(): void {
+    this.userService.getProfile().subscribe({
+      next: (response : any) => { 
+        this.data = response.data
+      },
+      error: () => {
+        this.authStore.dispatch(AuthFail())
+        this.router.navigateByUrl('/login')
+      },
+      complete: () => { this.getLoginStatus = true }
     })
-    this.ctpService.requestLogin$.next('Request login status from profile route')
   }
-
-  ngOnDestroy(): void {
-    if (this.loginReq) {
-      this.loginReq.unsubscribe()
-    }
-  }
-
   formatUrl(url:string) : string{
     return url.replace("watch?v=", "embed/")
   }

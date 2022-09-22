@@ -1,7 +1,38 @@
 <div class="container">
-    <a routerLink="/">Home</a> |
-    <a routerLink="/add">Add User</a> | 
-    <a routerLink="/profile">Profile</a> | 
-    <a *ngIf="!login" routerLink="/login">Log in</a>
-    <button type="button" class="logout-btn" *ngIf="login" (click)="logout()">Log out</button>
+    <div class="logo-container">
+        <div class="logo"></div>
+        <h3>Logopotisum</h3>
+    </div>
+    <div class="icon-outer-container">
+        <a routerLink="/">
+            <div class="icon-container">
+                <img src="../../../assets/icons/icon _search_outline_.png" alt="search icon" class="navigation-icon">
+            </div>
+        </a>
+        <a routerLink="/">
+            <div class="icon-container">
+                <img src="../../../assets/icons/icon _edit_.png" alt="edit icon" class="navigation-icon">
+            </div>
+        </a>
+        <a routerLink="/">
+            <div class="icon-container">
+                <img src="../../../assets/icons/icon _email_.png" alt="email icon" class="navigation-icon">
+            </div>
+        </a>
+        <a routerLink="/">
+            <div class="icon-container">
+                <img src="../../../assets/icons/icon _bell_.png" alt="bell icon" class="navigation-icon">
+            </div>
+        </a>
+        <a routerLink="/">
+            <div class="icon-container">
+                <img src="../../../assets/icons/icon _more_.png" alt="bell icon" class="navigation-icon">
+            </div>
+        </a>
+        <a routerLink="/">
+            <div class="icon-container" (click)="logout()">
+                <img src="../../../assets/icons/icon _person_.png" alt="bell icon" class="navigation-icon">
+            </div>
+        </a>
+    </div>
 </div>

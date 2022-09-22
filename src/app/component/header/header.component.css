@@ -1,21 +1,54 @@
 .container {
     display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+    justify-content: space-around;
+    background-color: #1a1c1e;
+    height: 5vh;
+    padding-inline: 30px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.logo-container {
+    display: flex;
+}
+
+.logo-container h3 {
+    color: white;
+    line-height: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 5px;
+}
+
+.logo{
+    background-color: red;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
 }
 
 a {
-    margin-inline: 10px;
+    margin-inline: 3px;
 }
 
-.logout-btn {
-    background-color: transparent;
-    border: 0;
-    margin-inline: 10px;
-    padding: 0;
-    color: red;
+.icon-outer-container {
+    display: flex;
 }
 
-button:hover{
-    cursor: pointer;
+.icon-container{
+    background-color: #2c2c2c;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
 }
+
+.navigation-icon{
+    width: 100%;
+    object-fit: fill;
+    filter: invert(90%) sepia(0%) saturate(72%) hue-rotate(160deg) brightness(95%) contrast(115%);
+}
+
+.icon-container:hover{
+    background-color: rgb(163, 163, 163);
+}
+

@@ -1,63 +1,44 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ChildToParentService } from './services/child-to-parent.service';
-import { Subscription } from 'rxjs';
+import { Component, OnInit} from '@angular/core';
+import { AuthService } from './services/auth.service';
+import { AuthSuccess, AuthFail } from './stores/authStore/authStore.actions';
+import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy {
-  title = 'members-manager';
-  login : boolean = false
 
-  loginSub = new Subscription()
-  loginStatusReq = new Subscription()
+export class AppComponent implements OnInit {
+  title = 'members-manager';
+  
+  loginStatus$ = new Observable<boolean>()
 
   constructor(
-    private client: HttpClient,
-    private ctpService : ChildToParentService
-  ) { }
+    private authService : AuthService,
+    private authStore : Store<{loginStatus : boolean}>,
+    private router : Router
+  ) {
+    this.loginStatus$ = authStore.select('loginStatus')
+  }
 
-  ngOnInit(): void {
-    this.client.get<any>('http://localhost:8000/users/protected').subscribe({
-      next: (response) => { 
-        this.login = true
-        this.ctpService.loginStatus$.next(this.login)
+  ngOnInit(): void{
+    this.authService.isLoggedIn().subscribe({
+      next: (e : boolean) => {
+        if (e) {
+          this.authStore.dispatch(AuthSuccess())
+        } else {
+          this.authStore.dispatch(AuthFail())
+          this.router.navigateByUrl('/login')
+        }
       },
-      error: () => {},
-      complete: () => {}
+      error: () => { 
+        this.authStore.dispatch(AuthFail())
+        this.router.navigateByUrl('/login')
+      },
+      complete: () => { }
     })
-    this.loginSub = this.ctpService.updateLogin$.subscribe(($event) => {
-      if ($event === 'login success') {
-        this.login = true
-        this.ctpService.loginStatus$.next(this.login)
-      }
-    })
-    this.loginStatusReq = this.ctpService.requestLogin$.subscribe(($event) => {
-      console.log($event)
-      console.log(this.login)
-      this.ctpService.loginStatus$.next(this.login)
-    })
-  }
-
-  ngOnDestroy(): void {
-      if (this.loginSub) {
-        this.loginSub.unsubscribe()
-      }
-
-      if (this.loginStatusReq) {
-        this.loginStatusReq.unsubscribe()
-      }
-  }
-
-  loginSuccess(){
-    console.log('haha')
-    this.login = true
-  }
-
-  logout() : void {
-    this.login = false
   }
 }
